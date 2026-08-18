@@ -14,19 +14,19 @@ from corsheaders.defaults import default_headers
 from datetime import timedelta
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_a-3zoa*u(0*+3@n6ly0c406xyqbq4oatg0z#xt0j@$^uk_+if'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-clave-temporal-dev')
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -96,11 +96,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'grupoloscar',
-        'USER': 'administrador',
-        'PASSWORD': 'King2025*',
-        "HOST": "192.168.0.104",
-        'PORT': '3306',
+        'NAME': os.getenv('DB_NAME', 'tu_base_datos'),
+        'USER': os.getenv('DB_USER', 'tu_usuario'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'tu_contrasena'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '3306'),
         'OPTIONS': {
             'charset': 'utf8mb4',
             'ssl': {'disabled': True},  
